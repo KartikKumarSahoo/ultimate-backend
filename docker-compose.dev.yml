@@ -1,4 +1,4 @@
-version: "3.2"
+version: '3.2'
 
 services:
   service-account:
@@ -7,7 +7,7 @@ services:
       dockerfile: apps/service-account/Dockerfile
       args:
         NODE_ENV: development
-    image: "service-account:latest"
+    image: 'service-account:latest'
     restart: always
     depends_on:
       - consul
@@ -20,8 +20,8 @@ services:
       - 50054:50054
     labels:
       kompose.service.type: clusterip
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   service-access:
     build:
@@ -29,7 +29,7 @@ services:
       dockerfile: apps/service-access/Dockerfile
       args:
         NODE_ENV: development
-    image: "service-access:latest"
+    image: 'service-access:latest'
     restart: always
     depends_on:
       - consul
@@ -42,8 +42,8 @@ services:
       - 50089:50089
     labels:
       kompose.service.type: clusterip
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   service-billing:
     build:
@@ -51,7 +51,7 @@ services:
       dockerfile: apps/service-billing/Dockerfile
       args:
         NODE_ENV: development
-    image: "service-billing:latest"
+    image: 'service-billing:latest'
     restart: always
     depends_on:
       - consul
@@ -64,8 +64,8 @@ services:
       - 50067:50067
     labels:
       kompose.service.type: clusterip
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   service-notification:
     build:
@@ -73,7 +73,7 @@ services:
       dockerfile: apps/service-notification/Dockerfile
       args:
         NODE_ENV: development
-    image: "service-notification:latest"
+    image: 'service-notification:latest'
     restart: always
     depends_on:
       - consul
@@ -86,8 +86,8 @@ services:
       - 50044:50044
     labels:
       kompose.service.type: clusterip
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   service-role:
     build:
@@ -95,7 +95,7 @@ services:
       dockerfile: apps/service-role/Dockerfile
       args:
         NODE_ENV: development
-    image: "service-role:latest"
+    image: 'service-role:latest'
     restart: always
     depends_on:
       - consul
@@ -108,8 +108,8 @@ services:
       - 50052:50052
     labels:
       kompose.service.type: clusterip
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   service-tenant:
     build:
@@ -117,7 +117,7 @@ services:
       dockerfile: apps/service-tenant/Dockerfile
       args:
         NODE_ENV: development
-    image: "service-tenant:latest"
+    image: 'service-tenant:latest'
     restart: always
     depends_on:
       - consul
@@ -130,8 +130,8 @@ services:
       - 50053:50053
     labels:
       kompose.service.type: clusterip
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   service-webhook:
     build:
@@ -139,7 +139,7 @@ services:
       dockerfile: apps/service-webhook/Dockerfile
       args:
         NODE_ENV: development
-    image: "service-webhook:latest"
+    image: 'service-webhook:latest'
     restart: always
     depends_on:
       - consul
@@ -152,8 +152,8 @@ services:
       - 50049:50049
     labels:
       kompose.service.type: clusterip
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   api-admin:
     build:
@@ -161,7 +161,7 @@ services:
       dockerfile: apps/api-admin/Dockerfile
       args:
         NODE_ENV: development
-    image: "api-admin:latest"
+    image: 'api-admin:latest'
     restart: always
     depends_on:
       - consul
@@ -175,45 +175,47 @@ services:
       - 50020:50020
     labels:
       kompose.service.type: loadbalancer
-      kompose.service.expose: "true"
-      kompose.image-pull-secret: "gitlabregcrednew"
-      kompose.image-pull-policy: "Always"
+      kompose.service.expose: 'true'
+      kompose.image-pull-secret: 'gitlabregcrednew'
+      kompose.image-pull-policy: 'Always'
 
   consul:
     container_name: consul
     ports:
-      - "8400:8400"
-      - "8500:8500"
-      - "8600:53/udp"
+      - '8300:8300'
+      - '8301:8301'
+      - '8302:8302'
+      - '8500:8500'
+      - '8600:53/udp'
     image: consul
-    command: ["agent", "-server", "-bootstrap", "-ui", "-client", "0.0.0.0"]
+    command: ['agent', '-server', '-bootstrap', '-ui', '-client', '0.0.0.0']
     labels:
       kompose.service.type: nodeport
-      kompose.service.expose: "true"
-      kompose.image-pull-policy: "Always"
+      kompose.service.expose: 'true'
+      kompose.image-pull-policy: 'Always'
 
   eventstore:
     container_name: eventstore
     ports:
-      - "2113:2113"
-      - "1113:1113"
+      - '2113:2113'
+      - '1113:1113'
     image: eventstore/eventstore:release-5.0.8
     labels:
       kompose.service.type: nodeport
-      kompose.service.expose: "true"
-      kompose.image-pull-policy: "Always"
+      kompose.service.expose: 'true'
+      kompose.image-pull-policy: 'Always'
 
   nats:
     container_name: nats
     ports:
-      - "4222:4222"
-      - "6222:6222"
-      - "8222:8222"
+      - '4222:4222'
+      - '6222:6222'
+      - '8222:8222'
     image: nats
     labels:
       kompose.service.type: nodeport
-      kompose.service.expose: "true"
-      kompose.image-pull-policy: "Always"
+      kompose.service.expose: 'true'
+      kompose.image-pull-policy: 'Always'
 
   mongo:
     container_name: mongo

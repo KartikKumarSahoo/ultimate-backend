@@ -6,7 +6,7 @@ import {
   Before,
   MongoEntityRepository,
   InjectClient,
-  InjectDb,
+  InjectMongoDb,
 } from '@juicycleff/repo-orm';
 import { PlanEntity } from '../entities';
 
@@ -27,7 +27,7 @@ import { PlanEntity } from '../entities';
 export class PlanRepository extends BaseMongoRepository<PlanEntity> {
   constructor(
     @InjectClient() private readonly dbc: MongoClient,
-    @InjectDb() private readonly db: Db,
+    @InjectMongoDb() private readonly db: Db,
     @Inject(CACHE_MANAGER) private readonly cache: CacheStore,
   ) {
     super({ client: dbc, db }, cache, null);

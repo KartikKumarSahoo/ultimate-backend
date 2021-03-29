@@ -5,7 +5,7 @@ import {
   Before,
   MongoEntityRepository,
   InjectClient,
-  InjectDb,
+  InjectMongoDb,
 } from '@juicycleff/repo-orm';
 import { merge } from 'lodash';
 import { TenantEntity } from '../entities';
@@ -31,7 +31,7 @@ import { TenantEntity } from '../entities';
 export class TenantRepository extends BaseMongoRepository<TenantEntity> {
   constructor(
     @InjectClient() private readonly dbc: MongoClient,
-    @InjectDb() private readonly db: Db,
+    @InjectMongoDb() private readonly db: Db,
     @Inject(CACHE_MANAGER) private readonly cache: CacheStore,
   ) {
     super({ client: dbc, db }, cache, null);

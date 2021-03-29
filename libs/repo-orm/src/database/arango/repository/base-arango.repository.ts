@@ -826,8 +826,8 @@ export class BaseArangoRepository<DOC, DTO = DOC> {
 
   public onSave(): { createdAt?: Date; updatedAt?: Date } {
     return {
-      createdAt: DateTime.local(),
-      updatedAt: DateTime.local(),
+      createdAt: (DateTime.local() as unknown) as Date,
+      updatedAt: (DateTime.local() as unknown) as Date,
     };
   }
 

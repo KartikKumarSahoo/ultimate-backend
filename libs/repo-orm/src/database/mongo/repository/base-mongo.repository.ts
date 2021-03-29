@@ -4,6 +4,7 @@ import {
   CollectionAggregationOptions,
   Cursor,
   DeleteWriteOpResultObject,
+  FilterQuery,
   ObjectID,
 } from 'mongodb';
 import { CacheStore } from '@nestjs/common';
@@ -112,7 +113,7 @@ export class BaseMongoRepository<DOC, DTO = DOC> {
     }
 
     const found = await collection
-      .find(query as Record<string, unknown>)
+      .find((query as unknown) as FilterQuery<DOC>)
       .toArray();
 
     const results: DOC[] = [];
@@ -432,7 +433,7 @@ export class BaseMongoRepository<DOC, DTO = DOC> {
     const cleanDoc = { ...eventResult, ...cleanEmptyProperties(tenantFix) };
     const res = await collection.insertOne(cleanDoc);
 
-    let newDocument = res.ops[0];
+    let newDocument = res.ops[0] as DOC | DOC[];
     newDocument = this.toggleId(newDocument, false);
     newDocument = await this.invokeEvents(
       POST_KEY,
@@ -440,6 +441,9 @@ export class BaseMongoRepository<DOC, DTO = DOC> {
       newDocument,
     );
     // newDocument = this.convertDateToString(newDocument);
+    if (newDocument instanceof Array) {
+      return newDocument[0];
+    }
     return newDocument;
   }
 
@@ -461,13 +465,13 @@ export class BaseMongoRepository<DOC, DTO = DOC> {
     delete updates.id;
     delete updates._id;
     const query = { _id: id };
-    const res = await collection.updateOne(
-      query as Record<string, unknown>,
-      { $set: updates },
-      { upsert: true },
-    );
+    // const res = await collection.updateOne(
+    //   query as Record<string, unknown>,
+    //   { $set: updates },
+    //   { upsert: true },
+    // );
     let newDocument = await collection.findOne(
-      query as Record<string, unknown>,
+      (query as unknown) as FilterQuery<DOC>,
     );
 
     // project new items
@@ -475,8 +479,8 @@ export class BaseMongoRepository<DOC, DTO = DOC> {
       Object.assign(document, newDocument);
     }
 
-    newDocument.id = id.toString(); // flip flop ids back
-    delete newDocument._id;
+    // newDocument.id = id.toString(); // flip flop ids back
+    // delete newDocument._id;
 
     newDocument = await this.invokeEvents(POST_KEY, ['SAVE'], newDocument);
     // newDocument = this.convertDateToString(newDocument);

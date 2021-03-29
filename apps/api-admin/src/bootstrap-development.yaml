@@ -8,17 +8,17 @@ nats:
 redis:
   host: localhost
   port: 6379
-  password: ""
+  password: ''
 app:
   auth:
-    sessionKey: "session.app"
-    domain: ""
+    sessionKey: 'session.app'
+    domain: ''
     resave: true
     rolling: true
     saveUninitialized: false
-    cookieMaxAge: "200H" # THIS SHOULD BE IN DURATION FORMAT 2S, 2H, 2M
+    cookieMaxAge: '200H' # THIS SHOULD BE IN DURATION FORMAT 2S, 2H, 2M
     secure: false
-    sessionSecret: "DKPp4JJyGdr3cPyHxxYJKb4m83AJLcNCjnt77GZG9Bh8PuBDNQBkj9BskcwvLQNB3zJhE5zkPkQjrEmzJzrsE74eAF8V4aZVMVkHFTEdGGAw6qpDkCKjNtDFd95"
+    sessionSecret: 'DKPp4JJyGdr3cPyHxxYJKb4m83AJLcNCjnt77GZG9Bh8PuBDNQBkj9BskcwvLQNB3zJhE5zkPkQjrEmzJzrsE74eAF8V4aZVMVkHFTEdGGAw6qpDkCKjNtDFd95'
 service:
   discoveryHost: localhost
   healthCheck:
@@ -27,7 +27,7 @@ service:
     tcp: ${{ service.discoveryHost }}:${{ service.port }}
   maxRetry: 5
   retryInterval: 5000
-  tags: ["v1.0.0", "api"]
+  tags: ['v1.0.0', 'api']
   name: io.ultimatebackend.api.admin
   port: 4000
 loadbalance:
