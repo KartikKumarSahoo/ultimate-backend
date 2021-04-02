@@ -15,7 +15,7 @@
     "start": "npx nest start",
     "start:dev": "npx nest start --watch",
     "start:debug": "npx nest start --debug --watch",
-    "start:prod": "node dist/apps/gateway-admin/main.js",
+    "start:prod": "node dist/apps/api-admin/main.js",
     "setup:local": "sh gen-ts.sh && nest build proto-schema && sh scripts/register.sh",
     "setup:proto": "sh gen-ts.sh && nest build proto-schema",
     "setup:consul": "sh scripts/register.sh",
@@ -25,11 +25,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token a5ea7c309f7543a3b7cfc662c1c88d67 --language typescript",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/gateway-admin/apps/signals/dfour-microservice-backend/test/jest-e2e.json",
+    "test:e2e": "jest --config ./apps/api-admin/apps/signals/dfour-microservice-backend/test/jest-e2e.json",
     "kompose": "kompose convert -o kubernetes/deployment.yaml",
     "docs": "npx compodoc --theme material --output docs -p tsconfig.json -s",
     "snyk-protect": "snyk protect",
-    "prepare-DISABLED-BECAUSE-BUILD-WAS-FAILING": "yarn run snyk-protect"
+    "prepare-DISABLED-BECAUSE-BUILD-WAS-FAILING": "yarn run snyk-protect",
+    "consul:import-kv": "consul kv import @consul_kv.json"
   },
   "dependencies": {
     "@anchan828/nest-sendgrid": "^0.3.16",

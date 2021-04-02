@@ -12,7 +12,7 @@ WORKDIR /nest
 RUN yarn global add @nestjs/cli
 
 COPY package*.json yarn.lock ./
-RUN yarn install --production=false
+RUN yarn install --frozen-lockfile
 
 # RUN yarn global add rimraf
 # RUN yarn global add @nestjs/cli
